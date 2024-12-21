@@ -1,6 +1,7 @@
 package com.synechronevertxdatabase.controller;
 
 import com.synechronevertxdatabase.model.EmployeeRecord;
+import com.synechronevertxdatabase.service.MyDatabaseServiceUsingMongo;
 import com.synechronevertxdatabase.service.MyDatabaseServiceUsingMySQL;
 
 import io.vertx.core.Vertx;
@@ -13,8 +14,11 @@ public class MySQLHandler {
 
 	private MyDatabaseServiceUsingMySQL mysqlservice;
 	
+	private MyDatabaseServiceUsingMongo mongoservice;
+	
 	public MySQLHandler(Vertx vertx) {
 		this.mysqlservice=new MyDatabaseServiceUsingMySQL(vertx);
+		this.mongoservice=new MyDatabaseServiceUsingMongo(vertx);
 	}
 	
 	
@@ -67,6 +71,21 @@ public class MySQLHandler {
 						
 			mysqlservice.deleteEmployee(empid).onSuccess(v->ctx.response().end("employee record deleted successfully")).onFailure(ctx::fail);
 			
+		});
+		
+		
+		router.post("/mongo/createEmployee").handler(ctx->{
+			EmployeeRecord empRecord=EmployeeRecord.fromJson(ctx.getBodyAsJson());
+			
+			mongoservice.createEmployeeRecord(empRecord).onSuccess(v->ctx.response().end("employee record created successfully")).onFailure(ctx::fail);
+		});
+		
+		
+		router.get("/mongo/findEmployeebyid/:empid").handler(ctx->{
+			
+			String empid=ctx.pathParam("empid");
+			
+			mongoservice.readEmployee(empid).onSuccess(v->ctx.response().end(v.toJson().encode())).onFailure(ctx::fail);
 		});
 		
 		
