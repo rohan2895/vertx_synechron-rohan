@@ -1,0 +1,26 @@
+download kafka from https://kafka.apache.org/downloads and unzip it in c drive
+
+how to run kafka zookeeper
+C:\kafka_2.12-2.6.0\kafka_2.12-2.6.0\bin\windows>zookeeper-server-start.bat zookeeper.properties
+
+how to run kafka server
+C:\kafka_2.12-2.6.0\kafka_2.12-2.6.0\bin\windows>kafka-server-start.bat server.properties
+
+how to create kafka topic
+
+kafka-topics --create --topic test-topic1 --bootstrap-server localhost:9092 --replication-factor 1 --partitions 3
+
+kafka-topics --list --bootstrap-server localhost:9092
+
+
+
+download rabbitmq from https://www.rabbitmq.com/docs/install-windows#installer and install before it do not forgot to install erlang
+to enable dashboard run 
+C:\Program Files\RabbitMQ Server\rabbitmq_server-4.0.5\sbin>rabbitmq-plugins enable rabbitmq_management
+restart rabbitmq server from services
+
+and open url http://localhost:15672
+enter username guest and password guest
+
+
+https://mosquitto.org/download/
